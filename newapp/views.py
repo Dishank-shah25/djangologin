@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import User
 from django.db import IntegrityError
+import os
 
 @csrf_exempt
 def create_user(request):
@@ -58,3 +59,11 @@ def get_all_users(request):
         return JsonResponse(users_list, safe=False, status=200)
     else:
         return JsonResponse({'error': 'Only GET requests are allowed'}, status=405)
+
+class AngularAppView(View):
+    def get(self, request):
+        try:
+            with open(os.path.join(settings.STATIC_ROOT, 'index.html')) as f:
+                return HttpResponse(f.read())
+        except FileNotFoundError:
+            return HttpResponse(status=501)  # or any suitable error response
