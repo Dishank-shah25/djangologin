@@ -6,5 +6,4 @@ urlpatterns = [
     path('create-user/', create_user, name='create_user'),
     path('login/', login_user),
     path('get_all_users', get_all_users, name='get_all_users'),
-     path('', AngularAppView.as_view(), name='angular-app'),
 ]
